@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tailoring Bill</title>
+  <link rel="stylesheet" href="style.css">
+  <style id="pageStyle"></style>
+</head>
+<body>
+  <div class="app">
+
+    <main class="form">
+      <div class="topbar">
+        <h1>New Bill</h1>
+        <a href="dresses.html" class="btn">Manage Dresses</a>
+      </div>
+
+      <section>
+        <h2>Customer</h2>
+        <div class="grid">
+          <label>Customer Name
+            <input type="text" id="custName" placeholder="Name">
+          </label>
+          <label>Mobile Number (optional)
+            <input type="tel" id="custMobile" maxlength="15" placeholder="Mobile">
+          </label>
+          <label>Bill Number
+            <input type="text" id="billNo">
+          </label>
+          <label>Bill Date
+            <input type="date" id="billDate">
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Add Dress</h2>
+        <div class="grid">
+          <label>Dress Type
+            <select id="dressType"></select>
+          </label>
+          <label>Lining Cloth
+            <select id="clothType">
+              <option>Customer Cloth</option>
+              <option>Shop Cloth</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="measureBox" class="measure-box">
+          <div class="label-line">Measurements (optional)</div>
+          <div id="measureFields" class="grid grid-5"></div>
+          <div id="extraFields"></div>
+          <button type="button" id="addMeasureBtn" class="small">+ Add measurement</button>
+        </div>
+
+        <label>Custom measurement / description (optional)
+          <input type="text" id="itemNote" placeholder="e.g. Puff sleeve, deep back neck">
+        </label>
+
+        <div class="grid grid-3">
+          <label>Quantity
+            <input type="number" id="qty" min="1" step="1" value="1" inputmode="numeric">
+          </label>
+          <label>Rate per Item
+            <input type="number" id="rate" min="0" step="0.01" inputmode="decimal" placeholder="0">
+          </label>
+          <div class="add-wrap">
+            <button type="button" id="addBtn" class="primary">Add Item</button>
+          </div>
+        </div>
+        <p id="itemError" class="error" role="alert"></p>
+      </section>
+
+      <section>
+        <h2>Items</h2>
+        <div class="table-wrap">
+          <table id="itemTable">
+            <thead>
+              <tr><th>Item</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Total</th><th></th></tr>
+            </thead>
+            <tbody id="itemBody"></tbody>
+          </table>
+        </div>
+        <div class="grand">Grand Total <strong id="grandTotal">0.00</strong></div>
+      </section>
+
+      <section>
+        <h2>Payment</h2>
+        <div class="grid grid-3">
+          <label>Paid Amount
+            <input type="number" id="paid" min="0" step="0.01" inputmode="decimal" placeholder="0">
+          </label>
+          <div class="readout">Balance <strong id="balance">0.00</strong></div>
+          <div class="readout">Status <strong id="status" class="badge">Unpaid</strong></div>
+        </div>
+        <p id="payError" class="error" role="alert"></p>
+      </section>
+
+      <section>
+        <h2>Bill options</h2>
+        <div class="toggles">
+        <label class="inline">Paper
+          <select id="paperWidth">
+            <option value="80">80 mm</option>
+            <option value="58">58 mm</option>
+          </select>
+        </label>
+          <label class="inline check"><input type="checkbox" id="printCloth" checked> Cloth type</label>
+          <label class="inline check"><input type="checkbox" id="printMeasure" checked> Measurements</label>
+        </div>
+      </section>
+
+      <section class="actions">
+        <div class="spacer"></div>
+        <button type="button" id="clearBtn">Clear Form</button>
+        <button type="button" id="printBtn" class="primary">Print Bill</button>
+      </section>
+    </main>
+
+    <aside class="preview">
+      <div class="label-line">Bill preview</div>
+      <div id="receipt" class="receipt"></div>
+    </aside>
+
+  </div>
+  <script src="store.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

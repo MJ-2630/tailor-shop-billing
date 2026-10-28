@@ -1,0 +1,175 @@
+:root{
+  --bg:#f3f4f1; --card:#ffffff; --ink:#1d2421; --muted:#66706b;
+  --line:#d9ddd8; --accent:#1f5f4a; --accent-ink:#ffffff;
+  --err:#b3261e; --ok:#1f7a45; --warn:#9a5b00; --bad:#b3261e;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+
+.app{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;
+  max-width:1100px;margin:0 auto;padding:24px}
+h1{margin:0 0 16px;font-size:24px}
+h2{margin:0 0 12px;font-size:16px}
+
+section{background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:16px;margin-bottom:16px}
+
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+input,select{font:inherit;color:var(--ink);padding:9px 10px;border:1px solid var(--line);
+  border-radius:6px;background:#fff;width:100%}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.grid-3{grid-template-columns:repeat(3,1fr);align-items:end;margin-top:12px}
+.grid-5{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+.measure-box{margin:12px 0}
+.measure-box[hidden]{display:none}
+.label-line{font-size:13px;color:var(--muted);margin-bottom:6px}
+.add-wrap{display:flex}
+.add-wrap button{width:100%}
+
+button{font:inherit;padding:9px 16px;border-radius:6px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);cursor:pointer}
+button:hover{background:#f0f2ee}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+button.primary:hover{background:#184c3b}
+button.link{border:0;background:none;color:var(--err);padding:4px 6px}
+
+.error{color:var(--err);font-size:13px;min-height:18px;margin:8px 0 0}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600}
+.num{text-align:right;white-space:nowrap}
+td small{display:block;color:var(--muted)}
+.empty{color:var(--muted);text-align:center;padding:16px}
+.grand{display:flex;justify-content:space-between;margin-top:12px;font-size:17px}
+
+.readout{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+.readout strong{font-size:18px;color:var(--ink);padding:5px 0}
+.badge{font-weight:700}
+.badge.paid{color:var(--ok)} .badge.balance{color:var(--warn)} .badge.unpaid{color:var(--bad)}
+
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.actions .spacer{flex:1}
+.inline{flex-direction:row;align-items:center;gap:8px}
+.inline select{width:auto}
+.check input{width:auto;min-height:0;width:20px;height:20px}
+.toggles{display:flex;flex-wrap:wrap;gap:12px 24px}
+
+.preview{position:sticky;top:24px;align-self:start}
+
+/* ---------- Receipt ---------- */
+.receipt{background:#fff;color:#000;width:72mm;margin:0 auto;padding:3mm 2mm;
+  font:12px/1.35 "Courier New",Courier,monospace;border:1px dashed var(--line)}
+.receipt.w58{width:48mm;font-size:11px}
+.receipt .c{text-align:center}
+.receipt .shop{font-size:16px;font-weight:700;text-transform:uppercase}
+.receipt .row{display:flex;justify-content:space-between;gap:6px}
+.receipt .b{font-weight:700}
+.receipt .sep{border-top:1px dashed #000;margin:5px 0}
+.receipt .item{margin-bottom:5px}
+.receipt .meas{padding-left:10px;word-break:break-word}
+.receipt .big{font-size:14px;font-weight:700}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr;padding:12px;gap:8px}
+  .preview{position:static}
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width:600px){
+  body{font-size:16px}
+  h1{font-size:20px;margin-bottom:12px}
+  section{padding:14px;margin-bottom:12px}
+
+  /* 16px inputs stop iPhone from zooming on focus; 44px+ tap targets */
+  input,select{font-size:16px;min-height:46px}
+  button{min-height:46px;font-size:16px}
+  label{font-size:14px}
+
+  .grid,.grid-3{grid-template-columns:1fr}
+  .grid-5{grid-template-columns:repeat(2,1fr)}
+  .grid-3{margin-top:12px}
+
+  /* items table becomes cards */
+  table,tbody,tr,td{display:block;width:100%}
+  thead{display:none}
+  tr{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:4px 8px;
+     border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:10px}
+  td{border:0;padding:0}
+  td:first-child{grid-column:1 / -1;font-weight:600}
+  td[data-label]{text-align:left}
+  td[data-label]::before{content:attr(data-label);display:block;font-size:12px;color:var(--muted);font-weight:400}
+  td:last-child{align-self:end;text-align:right}
+  td.empty{border:0}
+  tr:has(td.empty){display:block;border:0;padding:0}
+
+  /* action bar stays at the bottom of the screen */
+  .actions{position:sticky;bottom:0;z-index:5;margin:0 -2px 12px;
+    box-shadow:0 -6px 16px rgba(0,0,0,.08);gap:10px;
+    padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+  .actions .spacer{display:none}
+  .actions{padding-top:10px;gap:8px}
+  .actions #clearBtn{flex:1 1 30%;order:9}
+  .actions #printBtn{flex:2 1 55%;order:10}
+
+  .receipt{max-width:100%}
+}
+
+
+/* ---------- Dress management + shared bits ---------- */
+.page{max-width:720px;margin:0 auto;padding:24px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.topbar h1{margin:0}
+.btn{display:inline-block;padding:9px 16px;border:1px solid var(--line);border-radius:6px;
+  background:#fff;color:var(--ink);text-decoration:none;white-space:nowrap}
+.btn:hover{background:#f0f2ee}
+button.small{padding:7px 12px;font-size:14px;margin-top:8px}
+button.danger{color:var(--err)}
+.gap{margin-top:12px}
+.muted{color:var(--muted);font-size:14px}
+.ok-msg{color:var(--ok);font-size:14px;min-height:18px;margin:8px 0 0}
+
+.list-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.list-head h2{margin:0}
+.dress-row{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--line)}
+.dress-row:last-child{border-bottom:0}
+.dress-info{min-width:0}
+.dress-name{font-weight:600}
+.dress-name .rate{font-weight:400;color:var(--muted);font-size:13px;margin-left:6px}
+.dress-info small{display:block;color:var(--muted);overflow-wrap:anywhere}
+.dress-btns{display:flex;gap:8px;flex-shrink:0}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);
+  border-radius:999px;padding:4px 6px 4px 12px;background:#f7f8f6}
+.chip button{border:0;background:none;padding:0 8px;min-height:0;font-size:18px;line-height:1.2;color:var(--muted)}
+.add-row{display:flex;gap:8px}
+.form-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:12px}
+
+.extra-row{display:grid;grid-template-columns:1fr 110px auto;gap:8px;margin-top:8px;align-items:center}
+
+@media (max-width:600px){
+  .page{padding:12px}
+  .topbar h1{font-size:20px}
+  .dress-row{flex-direction:column;align-items:stretch}
+  .dress-btns button{flex:1}
+  .form-actions button{flex:1}
+  .extra-row{grid-template-columns:1fr 90px 44px}
+  .chip button{min-height:34px}
+  .list-head button{padding:9px 14px}
+}
+
+/* ---------- Print ---------- */
+@media print{
+  body{background:#fff}
+  .app{display:block;padding:0;max-width:none;margin:0}
+  .form,.preview .label-line,.topbar{display:none !important}
+  .preview{position:static}
+  .receipt{border:0;margin:0;width:100%;padding:1mm 2mm;box-shadow:none}
+  .receipt .row,.receipt .item{page-break-inside:avoid}
+}
